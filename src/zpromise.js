@@ -17,10 +17,7 @@ function Zpromise(resolver) {
     var state = PENDING;
     var value = null;
 
-    this.s = state;
-
     var callbacks = [];
-    this.c = callbacks;
 
     var self = this;
 
