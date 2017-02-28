@@ -3,4 +3,4 @@
          title="Promises/A+ 1.0 compliant" align="right" />
 </a>
 # zpromise
-Learn the [Promise/A+ spec](https://promisesaplus.com/)
+Simple [Promises/A+](https://promisesaplus.com/) implementation, good for learning
