@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang='zh-cmn-Hans'>
+	<head>
+		<title>formFactory demo</title>
+		<meta charset='utf-8'>
+		<script src="src/zpromise.js" type="text/javascript"></script>
+		<script src="test/adapter.js" type="text/javascript"></script>
+		<script>
+		    function deferred() {
+		        var resolve, reject;
+		        return {
+		            promise: new Zpromise(function(rslv, rjct){
+		                resolve = rslv;
+		                reject = rjct;
+		            }),
+		            resolve: resolve,
+		            reject: reject
+		        };
+		    }
+			var d = deferred();
+			var r = 'oo';
+			var thenF = function(v){
+				return {
+					then: function(on){
+						throw v;
+					}
+				};
+			};
+
+			var x = thenF(r);
+
+			d.resolve(x);
+
+			d.promise.then(function onFulfilled(y){
+				console.log('ff');
+				console.log(y);
+			}, function onRejected(y){
+				console.log('rj');
+				console.log(y);
+			});
+			// = 写成 ===
+			// 重新定义变量导致被覆盖
+			// 没有用setTimeout异步执行回调函数
+			// x.then === 'function' 少了 typeof
+			// x.then 应该只取一次
+		</script>
+	</head>
+	<body>
+	</body>
+</html>
