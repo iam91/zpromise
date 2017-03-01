@@ -24,12 +24,6 @@ function Zpromise(resolver) {
     function resolve(x) {
         if (self === x) {
             reject(new TypeError('Promise and x refer to the same object.'));
-        } else if (x instanceof Zpromise) {
-            x.then(function(v) {
-                resolve(v);
-            }, function(r) {
-                reject(r);
-            });
         } else if (typeof x === 'object' || typeof x === 'function') {
             var called = false;
             var then = null;
@@ -60,7 +54,6 @@ function Zpromise(resolver) {
             state = FULFILLED;
             value = v;
             done();
-            self.s = state;
         }
     }
 
@@ -69,7 +62,6 @@ function Zpromise(resolver) {
             state = REJECTED;
             value = r;
             done();
-            self.s = state;
         }
     }
 
@@ -122,6 +114,8 @@ Zpromise.prototype.then = function(onFulfilled, onRejected) {
     onFulfilled = typeof onFulfilled === 'function' ? onFulfilled : null;
     onRejected = typeof onRejected === 'function' ? onRejected : null;
     return new Zpromise(function(resolve, reject) {
+        //register `new` promise's `resolve` and `reject`
+        //in order to observe `this` promise's state change.
         that.promise(onFulfilled, onRejected, resolve, reject);
     });
 };

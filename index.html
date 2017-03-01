@@ -17,27 +17,6 @@
 		            reject: reject
 		        };
 		    }
-			var d = deferred();
-			var r = 'oo';
-			var thenF = function(v){
-				return {
-					then: function(on){
-						throw v;
-					}
-				};
-			};
-
-			var x = thenF(r);
-
-			d.resolve(x);
-
-			d.promise.then(function onFulfilled(y){
-				console.log('ff');
-				console.log(y);
-			}, function onRejected(y){
-				console.log('rj');
-				console.log(y);
-			});
 			// = 写成 ===
 			// 重新定义变量导致被覆盖
 			// 没有用setTimeout异步执行回调函数
